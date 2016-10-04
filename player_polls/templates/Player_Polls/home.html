@@ -1,0 +1,31 @@
+<meta http-equiv="cache-control" content="max-age=3600" charset="UTF-8"/>
+<script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <script data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+<title>Home</title>
+
+<ol class="breadcrumb">
+
+  <li class="active">Home</li>
+  <li><a href="/player_polls/">Teams</a></li>
+  
+  {% if user.is_authenticated %}
+  
+  <li class="pull-right"><a href="/player_polls/login/">Logout</a></li>
+  <li class="pull-right" class="active">{{user.first_name}}</li>
+  
+  {% else %}
+  
+  <li class="pull-right"><a href="/player_polls/login/">Login</a></li>
+  
+  {% endif %}
+
+</ol>
+
+<h3 {% if user.enduser.favourite_team %} style="color:{{user.enduser.favourite_team.primary_color}};" 
+{% endif %}>Welcome {{user.first_name}}</h3>
+
+
+{{user.enduser.favourite_team}}
