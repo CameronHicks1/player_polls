@@ -1,0 +1,77 @@
+<meta http-equiv="cache-control" content="max-age=3600" charset="UTF-8"/>
+<script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <script data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+<title>{{player.team}}| {{player.name}}</title>
+
+<ol class="breadcrumb">
+  <li><a href="/player_polls/">Teams</a></li>
+  <li><a href="/player_polls/{{player.team.id}}">{{player.team}}</a></li>
+  <li class="active">{{player.name}}</li>
+  {% if user.is_authenticated %}
+  <li class="pull-right"><a href="/player_polls/login/">Logout</a></li>
+  <li class="pull-right"><a href="/player_polls/user_profile/">{{user.first_name}}</a></li>
+  {% else %}
+  <li class="pull-right"><a href="/player_polls/login/">Login</a></li>
+  {% endif %}
+</ol>
+
+
+<h1>{{ player.name }}</h1>
+{{player.position}} for {{player.team}}<br><br>
+
+{{player.hometown}}<br>
+<span>
+
+{% if player.nationality != "" %}<span><img src="/static/player_polls/images/flagsx32/{{player.nationality}}.png"> </span>
+
+{% endif %}{{player.nationality}}
+</span><br><br>
+
+Date of Birth: {{player.date_of_birth}}<br><br>
+
+<a href="https://www.google.com/#q={{player.name}}">Google results</a><br><br>
+
+<h3>Comments</h3>
+  <p>Let us know what you think of {{player.name}}.</p>
+
+{% for comment in player.comment_set.all %}
+
+<div class="row">
+  <div class="col-sm-3">
+    <blockquote style="color:{{player.team.primary_color}}; background: #f3f3f3;">{{comment.text}}
+    <footer>{{comment.user}} - Posted: {{comment.post_date}}</footer></blockquote>
+  </div>
+</div>
+
+{% endfor %}
+
+
+{% if user.is_authenticated %}
+
+  <label for "comment">Comment:</label>
+
+<form id="leave_comment" method="POST" action="comment/">
+
+{% csrf_token %}
+
+  <div class="input-group">
+    <textarea class="form-control" rows="3" id="comment" name="user_comment"></textarea>
+    <span class="input-group-addon btn btn-primary" id="submit_comment">Post</span>
+  </div>
+</form>
+
+<script>
+$(document).ready(function() {
+  $('#submit_comment').click(function() {
+    $('#leave_comment').submit();
+  });
+});
+</script>
+{% else %}
+
+<p>Please <a href="/player_polls/login/">login</a> to leave a comment.</p>
+
+{% endif %}

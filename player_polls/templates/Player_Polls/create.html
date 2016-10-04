@@ -1,0 +1,22 @@
+<meta http-equiv="cache-control" content="max-age=3600" charset="UTF-8"/>
+<script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <script data-require="bootstrap@4.0.0-alpha.2" data-semver="4.0.0-alpha.2" src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+<ol class="breadcrumb">
+  <li><a href="/player_polls/">Home</a></li>
+  <li><a href="/player_polls/">Teams</a></li>
+  <li class="pull-right"><a href="/player_polls/login/">Login</a></li>
+</ol>
+
+<h2>Create Account</h2><br>
+
+<form action="/player_polls/create_user/" method="POST"> {% csrf_token %}
+  Username: <input type="text" name="username" id="username" class="form-control">
+  Email:    <input type="email" name="email" id="email" class="form-control">
+  Password: <input type="password" name="password" id="password" class="form-control">
+  <br>
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+  <input type="submit" value="Create" class="btn btn-primary">
+</form>
